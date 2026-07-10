@@ -1,5 +1,7 @@
 package br.dev.hygino.services;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,5 +33,18 @@ public class ProductService {
         product.setBrand(request.brand());
         product.setColor(request.color());
         product.setSize(request.size());
+    }
+
+    @Transactional(readOnly = true)
+    public ResponseProductDto getProductById(long id) {
+        final Product res = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found!"));
+        return new ResponseProductDto(res);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ResponseProductDto> getProducts(Pageable pageable) {
+        return repository.findAll(pageable)
+                .map(ResponseProductDto::new);
     }
 }

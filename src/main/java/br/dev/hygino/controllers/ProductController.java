@@ -1,11 +1,10 @@
 package br.dev.hygino.controllers;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import br.dev.hygino.dtos.RequestProductDto;
 import br.dev.hygino.dtos.ResponseProductDto;
@@ -26,4 +25,15 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseProductDto> getById(@PathVariable long id) {
+        ResponseProductDto res = service.getProductById(id);
+        return ResponseEntity.status(200).body(res);
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<ResponseProductDto>> getProducts(Pageable pageable) {
+        Page<ResponseProductDto> res = service.getProducts(pageable);
+        return ResponseEntity.status(200).body(res);
+    }
 }
