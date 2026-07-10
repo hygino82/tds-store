@@ -16,7 +16,7 @@ public record RequestProductDto(
         Color color,
         
         @NotNull
-        Short size,
+        String size,
         
         @NotNull
         Double price,

@@ -9,7 +9,7 @@ public record ResponseProductDto(
         String description,
         String brand,
         Color color,
-        Short size,
+        String size,
         Double price,
         Integer amount,
         LocalDateTime createdAt,

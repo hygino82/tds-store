@@ -1,0 +1,12 @@
+### Create product
+POST http://localhost:8080/api/v1/product
+Content-Type: application/json
+
+{
+  "brand": "Lee",
+  "price": 109.99,
+  "description": "Calça Jeans",
+  "color": "GREEN",
+  "amount": 10,
+  "size": "M"
+}
