@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Não Encontrada (404) - TDS Store</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #212529;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+            background: #ffffff;
+            padding: 50px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .error-code {
+            font-size: 120px;
+            font-weight: 900;
+            color: #0d6efd;
+            /* Altere para a cor principal da sua marca */
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #1a1a1a;
+        }
+
+        p {
+            font-size: 16px;
+            color: #6c757d;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .btn {
+            display: block;
+            padding: 12px 24px;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #0d6efd;
+            /* Cor principal da TDS Store */
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #495057;
+            border: 1px solid #ced4da;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+            color: #212529;
+        }
+
+        .footer-text {
+            margin-top: 40px;
+            font-size: 12px;
+            color: #adb5bd;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Código do Erro / Elemento Visual -->
+        <div class="error-code">404</div>
+
+        <!-- Mensagem Principal -->
+        <h1>Ops! Página não encontrada.</h1>
+        <p>O produto ou link que você tentou acessar não está disponível no momento. Ele pode ter mudado de lugar ou
+            saído de estoque.</p>
+
+        <!-- Opções de Navegação -->
+        <div class="links-container">
+            <a href="/" class="btn btn-primary">Voltar para a Home</a>
+            <a href="/produtos" class="btn btn-secondary">Ver Lançamentos</a>
+            <a href="/suporte" class="btn btn-secondary">Preciso de Ajuda</a>
+        </div>
+
+        <div class="footer-text">
+            © 2026 TDS Store. Todos os direitos reservados.
+        </div>
+    </div>
+
+</body>
+
+</html>
