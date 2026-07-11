@@ -1,4 +1,4 @@
-package br.dev.hygino.tds_store;
+package br.dev.hygino;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
