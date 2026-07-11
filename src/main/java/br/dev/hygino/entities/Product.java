@@ -3,6 +3,7 @@ package br.dev.hygino.entities;
 import br.dev.hygino.enums.Color;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -31,10 +32,13 @@ public class Product {
     private String size;
 
     @NotNull
+    @Positive
     private Double price;
 
+    @PositiveOrZero
     @NotNull
     private Integer amount;
+
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt = LocalDateTime.now();
 

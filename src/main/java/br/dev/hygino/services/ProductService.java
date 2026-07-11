@@ -1,5 +1,7 @@
 package br.dev.hygino.services;
 
+import br.dev.hygino.dtos.RequestChangeProductAmount;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -9,6 +11,8 @@ import br.dev.hygino.dtos.RequestProductDto;
 import br.dev.hygino.dtos.ResponseProductDto;
 import br.dev.hygino.entities.Product;
 import br.dev.hygino.repositories.ProductRepository;
+
+import java.time.LocalDateTime;
 
 @Service
 public class ProductService {
@@ -43,8 +47,45 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ResponseProductDto> getProducts(Pageable pageable) {
-        return repository.findAll(pageable)
-                .map(ResponseProductDto::new);
+    public Page<ResponseProductDto> getProducts(Pageable pageable, String brand, String size) {
+        Page<Product> page = repository.findProducts(pageable, brand, size);
+        return page.map(ResponseProductDto::new);
+    }
+
+    @Transactional
+    public ResponseProductDto updateProduct(long id, RequestProductDto dto) {
+        try {
+            var product = repository.getReferenceById(id);
+            dtoToEntity(dto, product);
+            product.setUpdatedAt(LocalDateTime.now());
+            repository.save(product);
+            return new ResponseProductDto(product);
+        } catch (EntityNotFoundException e) {
+            throw new DatabaseException("Product does not exists!");
+        }
+    }
+
+    @Transactional
+    public ResponseProductDto changeProductAmount(RequestChangeProductAmount request) {
+        try {
+            var product = repository.getReferenceById(request.id());
+            final var newAmount = product.getAmount() + request.amount();
+
+            if (newAmount < 0) {
+                throw new InvalidAmountException("Wrong amount!");
+            }
+
+            product.setAmount(newAmount);
+            product.setUpdatedAt(LocalDateTime.now());
+            repository.save(product);
+            return new ResponseProductDto(product);
+        } catch (EntityNotFoundException e) {
+            throw new DatabaseException("Product does not exists!");
+        }
+    }
+
+    @Transactional
+    public void removeProduct(long id) {
+        repository.deleteById(id);
     }
 }

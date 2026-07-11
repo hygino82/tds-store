@@ -11,5 +11,34 @@ Content-Type: application/json
   "size": "M"
 }
 
-### Get product
-GET http://localhost:8080/api/v1/product
+### Get products
+GET http://localhost:8080/api/v1/product?brand=Nike
+
+### Get product by id
+GET http://localhost:8080/api/v1/product/1
+
+
+### Update product
+PUT http://localhost:8080/api/v1/product/1
+Content-Type: application/json
+
+{
+  "brand": "Vista Jeans",
+  "price": 39.99,
+  "description": "Calça Jeans",
+  "color": "RED",
+  "amount": 3,
+  "size": "G"
+}
+
+### Delete product by id
+DELETE http://localhost:8080/api/v1/product/3
+
+### Update product amount
+PATCH http://localhost:8080/api/v1/product
+Content-Type: application/json
+
+{
+  "id": 1,
+  "amount": -110
+}
