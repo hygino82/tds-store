@@ -11,7 +11,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("""
             SELECT obj FROM Product obj
             WHERE obj.brand LIKE CONCAT('%', COALESCE(:brand, ''), '%')
-              AND obj.size = COALESCE(:size, obj.size)
+              AND obj.size LIKE CONCAT('%', COALESCE(:size, ''), '%')
             """)
     Page<Product> findProducts(Pageable pageable, String brand, String size);
 }

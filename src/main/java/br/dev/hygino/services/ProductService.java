@@ -1,6 +1,9 @@
 package br.dev.hygino.services;
 
 import br.dev.hygino.dtos.RequestChangeProductAmount;
+import br.dev.hygino.services.exceptions.DatabaseException;
+import br.dev.hygino.services.exceptions.InvalidAmountException;
+import br.dev.hygino.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -48,7 +51,7 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public Page<ResponseProductDto> getProducts(Pageable pageable, String brand, String size) {
-        Page<Product> page = repository.findProducts(pageable, brand, size);
+        Page<Product> page = repository.findProducts(pageable, brand.isEmpty() ? null : brand, size.isEmpty() ? null : brand);
         return page.map(ResponseProductDto::new);
     }
 
