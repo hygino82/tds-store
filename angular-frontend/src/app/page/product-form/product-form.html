@@ -1,0 +1,51 @@
+<div class="container">
+    <form (ngSubmit)="salvarProduto()">
+        <div class="form-group">
+            <label for="description">Descrição:</label>
+            <input type="text" class="form-control" id="description" name="description"
+                placeholder="Descrição do produto" [(ngModel)]="description">
+        </div>
+
+        <div class="form-group">
+            <label for="brand">Marca:</label>
+            <input type="text" class="form-control" id="brand" name="brand" placeholder="Marca do produto"
+                [(ngModel)]="brand">
+        </div>
+
+        <div class="form-group">
+            <label for="price">Preço:</label>
+            <input type="number" class="form-control" id="price" name="price" placeholder="Preço do produto"
+                [(ngModel)]="price">
+        </div>
+
+        <div class="form-group">
+            <label for="quantity">Quantidade:</label>
+            <input type="number" class="form-control" id="quantity" name="amount" placeholder="Quantidade do produto"
+                [(ngModel)]="amount">
+        </div>
+
+        <div class="form-group">
+            <label for="tamanho">Tamanho:</label>
+            <input type="text" class="form-control" id="tamanho" name="size" placeholder="Tamanho do produto"
+                maxlength="4" [(ngModel)]="size">
+        </div>
+
+        <div class="form-group">
+            <label for="cor">Cor:</label>
+            <select id="cor" name="color" class="form-control" [(ngModel)]="color">
+                <option value="WHITE">Branco</option>
+                <option value="GREEN">Verde</option>
+                <option value="BLUE">Azul</option>
+                <option value="GREY">Cinza</option>
+                <option value="YELLOW">Amarelo</option>
+                <option value="ORANGE">Laranja</option>
+                <option value="BLACK">Preto</option>
+                <option value="RED">Vermelho</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">
+            Salvar
+        </button>
+    </form>
+</div>
