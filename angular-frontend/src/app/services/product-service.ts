@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { InsertProductDto, ProductDto, ProductPage } from '../types/product.types';
+import { InsertProductDto, ProductDto, ProductPage, ProductReportDto } from '../types/product.types';
 
 @Injectable({
   providedIn: 'root',
@@ -17,5 +17,9 @@ export class ProductService {
 
   buscarProdutos(brand: string, size: string): Observable<ProductPage> {
     return this.http.get<ProductPage>(`${this.API_URL}?brand=${brand}&size=${size}`);
+  }
+
+  gerarRelatorio(): Observable<ProductReportDto> {
+    return this.http.get<ProductReportDto>(`${this.API_URL}/report`);
   }
 }

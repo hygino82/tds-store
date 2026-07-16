@@ -1,6 +1,6 @@
 package br.dev.hygino.services;
 
-import br.dev.hygino.dtos.RequestChangeProductAmount;
+import br.dev.hygino.dtos.*;
 import br.dev.hygino.services.exceptions.DatabaseException;
 import br.dev.hygino.services.exceptions.InvalidAmountException;
 import br.dev.hygino.services.exceptions.ResourceNotFoundException;
@@ -10,12 +10,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.dev.hygino.dtos.RequestProductDto;
-import br.dev.hygino.dtos.ResponseProductDto;
 import br.dev.hygino.entities.Product;
 import br.dev.hygino.repositories.ProductRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class ProductService {
@@ -91,5 +90,18 @@ public class ProductService {
     @Transactional
     public void removeProduct(long id) {
         repository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public DashboardDto getSummary() {
+        final List<ColorSummaryDto> colorSummary = repository.getAmountByColor();
+        final List<BrandSummaryDto> brandSummary = repository.getAmountByBrand();
+        final List<SizeSummaryDto> sizeSummary = repository.getAmountBySize();
+
+        if (colorSummary.isEmpty() || brandSummary.isEmpty() || sizeSummary.isEmpty()) {
+            throw new ResourceNotFoundException("Não existem produtos cadastrados!");
+        }
+
+        return new DashboardDto(colorSummary, brandSummary, sizeSummary);
     }
 }

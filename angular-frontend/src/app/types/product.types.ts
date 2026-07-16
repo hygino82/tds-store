@@ -54,3 +54,24 @@ export const colorNameMap: Record<string, string> = {
   PURPLE: 'Roxo',
   ORANGE: 'Laranja',
 };
+
+export type BrandReportDto = {
+  brand: string;
+  amount: number;
+};
+
+export type SizeReportDto = {
+  size: string;
+  amount: number;
+};
+
+export type ColorReportDto = {
+  color: string;
+  amount: number;
+};
+
+export type ProductReportDto = {
+  brandSummary: BrandReportDto[];
+  sizeSummary: SizeReportDto[];
+  colorSummary: ColorReportDto[];
+};

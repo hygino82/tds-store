@@ -1,8 +1,6 @@
 package br.dev.hygino.controllers;
 
-import br.dev.hygino.dtos.RequestChangeProductAmount;
-import br.dev.hygino.dtos.RequestProductDto;
-import br.dev.hygino.dtos.ResponseProductDto;
+import br.dev.hygino.dtos.*;
 import br.dev.hygino.services.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,5 +60,11 @@ public class ProductController {
     public ResponseEntity<Void> removeProductById(@PathVariable long id) {
         service.removeProduct(id);
         return ResponseEntity.status(400).build();
+    }
+
+    @GetMapping("report")
+    public ResponseEntity<DashboardDto> getSummary() {
+        final var res = service.getSummary();
+        return ResponseEntity.status(200).body(res);
     }
 }
