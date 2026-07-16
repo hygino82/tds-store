@@ -1,0 +1,34 @@
+<div class="container">
+    <h1>Lista de Produtos</h1>
+    <p>Total: {{ productPage?.content?.length }}</p>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Descrição</th>
+                <th scope="col">Marca</th>
+                <th scope="col">Preço</th>
+                <th scope="col">Quantidade</th>
+                <th scope="col">Tamanho</th>
+                <th scope="col">Cor</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (product of productPage?.content; track product.id; let i = $index) {
+            <tr>
+                <th>{{ product.id }}</th>
+                <td>{{ product.description }}</td>
+                <td>{{ product.brand }}</td>
+                <td>{{ product.price | currency:'BRL' }}</td>
+                <td>{{ product.amount }}</td>
+                <td>{{ product.size }}</td>
+                <td>
+                    <span class="color-box" [style.background-color]="colorMap[product.color]">
+                    </span>
+                    {{colorNameMap[product.color]}}
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

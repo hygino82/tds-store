@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { InsertProductDto } from '../../types/product.types';
+import { InsertProductDto, ProductPage } from '../../types/product.types';
 import { ProductService } from '../../services/product-service';
 
 @Component({
@@ -17,6 +17,7 @@ export class ProductForm {
   amount: number = 0;
   color: string = 'BLUE';
   size: string = 'M';
+  productPage: ProductPage | null = null;
 
   constructor(private readonly productService: ProductService) {}
 
