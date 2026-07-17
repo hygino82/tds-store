@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, PLATFORM_ID, signal, computed } from '@angul
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { BaseChartDirective } from 'ng2-charts';
 import { ProductService } from '../../services/product-service';
-import { ProductReportDto } from '../../types/product.types';
+import { colorNameMap, ProductReportDto } from '../../types/product.types';
 
 import { Chart, registerables, ChartConfiguration } from 'chart.js';
 Chart.register(...registerables);
@@ -49,7 +49,7 @@ export class ProductResume implements OnInit {
     if (!data?.colorSummary?.length) return null;
 
     return {
-      labels: data.colorSummary.map((c: any) => c.color),
+      labels: data.colorSummary.map((c: any) => colorNameMap[c.color?.toUpperCase()] ?? c.color),
       datasets: [
         {
           data: data.colorSummary.map((c: any) => this.getQty(c)),
