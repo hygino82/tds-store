@@ -4,7 +4,6 @@ import { BaseChartDirective } from 'ng2-charts';
 import { ProductService } from '../../services/product-service';
 import { ProductReportDto } from '../../types/product.types';
 
-// 1. IMPORTANTE: Importar e registrar o Chart.js
 import { Chart, registerables, ChartConfiguration } from 'chart.js';
 Chart.register(...registerables);
 
@@ -18,59 +17,92 @@ Chart.register(...registerables);
 export class ProductResume implements OnInit {
   isBrowser = false;
 
-  // 2. Usando Signal para o relatório (Padrão Angular 22)
   report = signal<ProductReportDto | null>(null);
 
-  // 3. Computeds reativos: eles se autodeclaram prontos assim que o report muda
-  colorChartData = computed<ChartConfiguration<'pie'>['data'] | null>(() => {
-    const data = this.report();
-    if (!data) return null;
-    return {
-      labels: data.colorSummary.map(c => c.color),
-      datasets: [{
-        data: data.colorSummary.map(c => this.parseNumber(c.amount)),
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']
-      }]
-    };
-  });
-
-  brandChartData = computed<ChartConfiguration<'bar'>['data'] | null>(() => {
-    const data = this.report();
-    if (!data) return null;
-    return {
-      labels: data.brandSummary.map(b => b.brand),
-      datasets: [{
-        label: 'Quantidade',
-        data: data.brandSummary.map(b => this.parseNumber(b.amount)),
-        backgroundColor: '#36A2EB'
-      }]
-    };
-  });
-
-  sizeChartData = computed<ChartConfiguration<'bar'>['data'] | null>(() => {
-    const data = this.report();
-    if (!data) return null;
-    return {
-      labels: data.sizeSummary.map(s => s.size),
-      datasets: [{
-        label: 'Quantidade',
-        data: data.sizeSummary.map(s => this.parseNumber(s.amount)),
-        backgroundColor: '#4BC0C0'
-      }]
-    };
-  });
-
-  // Configurações estáticas permanecem iguais
   pieOptions: ChartConfiguration<'pie'>['options'] = {
     responsive: true,
-    maintainAspectRatio: false
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'bottom' }
+    }
   };
 
   barOptions: ChartConfiguration<'bar'>['options'] = {
     indexAxis: 'y',
     responsive: true,
-    maintainAspectRatio: false
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false }
+    }
   };
+
+  // Helper para pegar o valor independente se vier quantity ou amount
+  private getQty(item: any): number {
+    const raw = item?.quantity?? item?.amount?? 0;
+    if (typeof raw === 'number') return raw;
+    // se vier como string "1.200,50"
+    return this.parseNumber(raw);
+  }
+
+  colorChartData = computed<ChartConfiguration<'pie'>['data'] | null>(() => {
+    const data = this.report();
+    if (!data?.colorSummary?.length) return null;
+
+    return {
+      labels: data.colorSummary.map((c: any) => c.color),
+      datasets: [
+        {
+          data: data.colorSummary.map((c: any) => this.getQty(c)),
+          backgroundColor: [
+            '#111827', // BLACK
+            '#2563eb', // BLUE
+            '#16a34a', // GREEN
+            '#9ca3af', // GREY
+            '#dc2626', // RED
+            '#e5e7eb', // WHITE
+            '#eab308' // YELLOW
+          ],
+          borderWidth: 2
+        }
+      ]
+    };
+  });
+
+  brandChartData = computed<ChartConfiguration<'bar'>['data'] | null>(() => {
+    const data = this.report();
+    if (!data?.brandSummary?.length) return null;
+
+    const sorted = [...data.brandSummary].sort((a: any, b: any) => this.getQty(b) - this.getQty(a));
+
+    return {
+      labels: sorted.map((b: any) => b.brand),
+      datasets: [
+        {
+          label: 'Quantidade',
+          data: sorted.map((b: any) => this.getQty(b)),
+          backgroundColor: '#36A2EB'
+        }
+      ]
+    };
+  });
+
+  sizeChartData = computed<ChartConfiguration<'bar'>['data'] | null>(() => {
+    const data = this.report();
+    if (!data?.sizeSummary?.length) return null;
+
+    const sorted = [...data.sizeSummary].sort((a: any, b: any) => Number(a.size) - Number(b.size));
+
+    return {
+      labels: sorted.map((s: any) => `Tam. ${s.size}`),
+      datasets: [
+        {
+          label: 'Quantidade',
+          data: sorted.map((s: any) => this.getQty(s)),
+          backgroundColor: '#4BC0C0'
+        }
+      ]
+    };
+  });
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -88,9 +120,10 @@ export class ProductResume implements OnInit {
   getReport(): void {
     this.productService.gerarRelatorio().subscribe({
       next: (data) => {
-        console.log('Relatório recebido com sucesso:', data);
-        // Atualiza o Signal. Os "computeds" acima vão recalcular automaticamente!
+        console.log('Relatório recebido:', data);
         this.report.set(data);
+        // debug: veja se agora vem com valores
+        console.log('colorChartData', this.colorChartData());
       },
       error: (err) => console.error('Erro ao buscar o relatório:', err)
     });
@@ -110,6 +143,6 @@ export class ProductResume implements OnInit {
       normalized = only.replace(/,/g, '');
     }
     const n = Number(normalized);
-    return isNaN(n) ? 0 : n;
+    return isNaN(n)? 0 : n;
   }
 }

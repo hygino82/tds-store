@@ -1,36 +1,31 @@
-<!-- Garante que roda no browser e pula hidratação para evitar conflitos com SSR -->
-<div *ngIf="isBrowser && report()" ngSkipHydration class="charts-container">
-  
-  <!-- Gráfico de Cores -->
-  <div class="chart-wrapper" *ngIf="colorChartData()">
-    <canvas baseChart
-            [data]="colorChartData()!"
-            [options]="pieOptions"
-            type="pie">
+<div class="container">
+  <h2>Resumo do Produtos</h2>
+
+  @if (isBrowser) {
+  @if (colorChartData(); as colorData) {
+  <div class="chart-container">
+    <h3>Distribuição de Cores</h3>
+    <canvas baseChart [data]="colorData" [options]="pieOptions" type="pie">
     </canvas>
   </div>
+  }
 
-  <!-- Gráfico de Marcas -->
-  <div class="chart-wrapper" *ngIf="brandChartData()">
-    <canvas baseChart
-            [data]="brandChartData()!"
-            [options]="barOptions"
-            type="bar">
+  @if (brandChartData(); as brandData) {
+  <div class="chart-container">
+    <h3>Distribuição de Marcas</h3>
+    <canvas baseChart [data]="brandData" [options]="barOptions" type="bar">
     </canvas>
   </div>
+  }
 
-  <!-- Gráfico de Tamanhos -->
-  <div class="chart-wrapper" *ngIf="sizeChartData()">
-    <canvas baseChart
-            [data]="sizeChartData()!"
-            [options]="barOptions"
-            type="bar">
+  @if (sizeChartData(); as sizeData) {
+  <div class="chart-container">
+    <h3>Distribuição de Tamanhos</h3>
+    <canvas baseChart [data]="sizeData" [options]="barOptions" type="bar">
     </canvas>
   </div>
-
-</div>
-
-<!-- Tela de Carregamento -->
-<div *ngIf="isBrowser && !report()">
-  <p>Carregando relatórios...</p>
+  }
+  } @else {
+  <p>Carregando gráficos...</p>
+  }
 </div>
