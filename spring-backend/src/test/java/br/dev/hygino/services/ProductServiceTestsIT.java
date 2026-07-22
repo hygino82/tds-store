@@ -1,12 +1,9 @@
 package br.dev.hygino.services;
 
-import br.dev.hygino.dtos.RequestProductDto;
-import br.dev.hygino.dtos.ResponseProductDto;
-import br.dev.hygino.enums.Color;
-import br.dev.hygino.factories.ProductFactory;
-import br.dev.hygino.repositories.ProductRepository;
-import br.dev.hygino.services.exceptions.DatabaseException;
-import br.dev.hygino.services.exceptions.ResourceNotFoundException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +13,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import br.dev.hygino.dtos.RequestProductDto;
+import br.dev.hygino.dtos.ResponseProductDto;
+import br.dev.hygino.enums.Color;
+import br.dev.hygino.factories.ProductFactory;
+import br.dev.hygino.services.exceptions.DatabaseException;
+import br.dev.hygino.services.exceptions.ResourceNotFoundException;
 
 @SpringBootTest
 @Transactional
@@ -25,8 +27,8 @@ class ProductServiceTestsIT {
     @Autowired
     private ProductService productService;
 
-    @Autowired
-    private ProductRepository productRepository;
+    //@Autowired
+   // private ProductRepository productRepository;
 
     private RequestProductDto requestProduct;
 
@@ -77,7 +79,7 @@ class ProductServiceTestsIT {
 
     @Test
     @DisplayName("")
-    public void getProductsShouldRerunPage() {
+    public void getProductsShouldReturnPage() {
         final String size = "42";
         final PageRequest pageable = PageRequest.of(0, 10);
         final Page<ResponseProductDto> res = productService.getProducts(pageable, "", size);
