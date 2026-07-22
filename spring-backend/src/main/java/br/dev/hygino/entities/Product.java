@@ -1,156 +1,182 @@
 package br.dev.hygino.entities;
 
-import br.dev.hygino.enums.Color;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-
 import java.time.LocalDateTime;
 import java.util.Objects;
+
+import br.dev.hygino.enums.Category;
+import br.dev.hygino.enums.Color;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "tb_product")
 public class Product {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @NotBlank
-    @Size(min = 3, max = 100)
-    private String description;
+	@NotBlank
+	@Size(min = 3, max = 100)
+	private String description;
 
-    @NotBlank
-    @Size(min = 3, max = 100)
-    private String brand;
+	@NotBlank
+	@Size(min = 3, max = 100)
+	private String brand;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private Color color;
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private Color color;
 
-    @NotBlank
-    @Size(min = 1, max = 10)
-    private String size;
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private Category category;
 
-    @NotNull
-    @Positive
-    private Double price;
+	@NotBlank
+	@Size(min = 1, max = 10)
+	private String size;
 
-    @PositiveOrZero
-    @NotNull
-    private Integer amount;
+	@NotNull
+	@Positive
+	private Double price;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
-    private LocalDateTime updatedAt = LocalDateTime.now();
+	@PositiveOrZero
+	@NotNull
+	private Integer amount;
 
-    public Product() {
-    }
+	private LocalDateTime createdAt = LocalDateTime.now();
+	private LocalDateTime updatedAt = LocalDateTime.now();
 
-    public Product(Long id, String description, String brand, Color color, String size, Double price, Integer amount) {
-        this.id = id;
-        this.description = description;
-        this.brand = brand;
-        this.color = color;
-        this.size = size;
-        this.price = price;
-        this.amount = amount;
-    }
+	public Product() {
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Product(Long id, String description, String brand, Color color, Category category, String size, Double price,
+			Integer amount) {
+		this.id = id;
+		this.description = description;
+		this.brand = brand;
+		this.color = color;
+		this.category = category;
+		this.size = size;
+		this.price = price;
+		this.amount = amount;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public String getBrand() {
-        return brand;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
+	public String getBrand() {
+		return brand;
+	}
 
-    public Color getColor() {
-        return color;
-    }
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
 
-    public void setColor(Color color) {
-        this.color = color;
-    }
+	public Color getColor() {
+		return color;
+	}
 
-    public String getSize() {
-        return size;
-    }
+	public void setColor(Color color) {
+		this.color = color;
+	}
 
-    public void setSize(String size) {
-        this.size = size;
-    }
+	public Category getCategory() {
+		return category;
+	}
 
-    public Double getPrice() {
-        return price;
-    }
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 
-    public void setPrice(Double price) {
-        this.price = price;
-    }
+	public String getSize() {
+		return size;
+	}
 
-    public Integer getAmount() {
-        return amount;
-    }
+	public void setSize(String size) {
+		this.size = size;
+	}
 
-    public void setAmount(Integer amount) {
-        this.amount = amount;
-    }
+	public Double getPrice() {
+		return price;
+	}
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
+	public void setPrice(Double price) {
+		this.price = price;
+	}
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
+	public Integer getAmount() {
+		return amount;
+	}
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
+	public void setAmount(Integer amount) {
+		this.amount = amount;
+	}
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 23 * hash + Objects.hashCode(this.id);
-        return hash;
-    }
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Product other = (Product) obj;
-        return Objects.equals(this.id, other.id);
-    }
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
 
-    @Override
-    public String toString() {
-        return "Pant{" + "id=" + id + ", brand=" + brand + ", color=" + color + ", size=" + size + ", price=" + price + '}';
-    }
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 7;
+		hash = 23 * hash + Objects.hashCode(this.id);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Product other = (Product) obj;
+		return Objects.equals(this.id, other.id);
+	}
+
+	@Override
+	public String toString() {
+		return "Pant{" + "id=" + id + ", brand=" + brand + ", color=" + color + ", size=" + size + ", price=" + price
+				+ '}';
+	}
 }

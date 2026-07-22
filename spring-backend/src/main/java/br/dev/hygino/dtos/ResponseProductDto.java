@@ -1,14 +1,17 @@
 package br.dev.hygino.dtos;
 
-import br.dev.hygino.entities.Product;
-import br.dev.hygino.enums.Color;
 import java.time.LocalDateTime;
+
+import br.dev.hygino.entities.Product;
+import br.dev.hygino.enums.Category;
+import br.dev.hygino.enums.Color;
 
 public record ResponseProductDto(
         Long id,
         String description,
         String brand,
         Color color,
+        Category category,
         String size,
         Double price,
         Integer amount,
@@ -21,6 +24,7 @@ public record ResponseProductDto(
                 entity.getDescription(),
                 entity.getBrand(),
                 entity.getColor(),
+                entity.getCategory(),
                 entity.getSize(),
                 entity.getPrice(),
                 entity.getAmount(),
