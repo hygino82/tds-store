@@ -54,6 +54,8 @@ public class Product {
 	@NotNull
 	private Integer amount;
 
+	private String imageUrl;
+
 	private LocalDateTime createdAt = LocalDateTime.now();
 	private LocalDateTime updatedAt = LocalDateTime.now();
 
@@ -61,7 +63,7 @@ public class Product {
 	}
 
 	public Product(Long id, String description, String brand, Color color, Category category, String size, Double price,
-			Integer amount) {
+			Integer amount, String imageUrl) {
 		this.id = id;
 		this.description = description;
 		this.brand = brand;
@@ -70,6 +72,7 @@ public class Product {
 		this.size = size;
 		this.price = price;
 		this.amount = amount;
+		this.imageUrl = imageUrl;
 	}
 
 	public Long getId() {
@@ -134,6 +137,14 @@ public class Product {
 
 	public void setAmount(Integer amount) {
 		this.amount = amount;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 	public LocalDateTime getCreatedAt() {

@@ -13,58 +13,57 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1/product")
 public class ProductController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
-    private final ProductService service;
+	private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
+	private final ProductService service;
 
-    public ProductController(ProductService service) {
-        this.service = service;
-    }
+	public ProductController(ProductService service) {
+		this.service = service;
+	}
 
-    @PostMapping
-    public ResponseEntity<ResponseProductDto> createProduct(@RequestBody RequestProductDto request) {
-        ResponseProductDto response = service.createProduct(request);
-        return ResponseEntity.status(201).body(response);
-    }
+	@PostMapping
+	public ResponseEntity<ResponseProductDto> createProduct(@RequestBody RequestProductDto request) {
+		ResponseProductDto response = service.createProduct(request);
+		return ResponseEntity.status(201).body(response);
+	}
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ResponseProductDto> getById(@PathVariable long id) {
-        ResponseProductDto res = service.getProductById(id);
-        return ResponseEntity.status(200).body(res);
-    }
+	@GetMapping("/{id}")
+	public ResponseEntity<ResponseProductDto> getById(@PathVariable long id) {
+		ResponseProductDto res = service.getProductById(id);
+		return ResponseEntity.status(200).body(res);
+	}
 
-    @GetMapping
-    public ResponseEntity<Page<ResponseProductDto>> getProducts(
-            Pageable pageable,
-            @RequestParam(defaultValue = "") String brand,
-            @RequestParam(defaultValue = "") String size) {
-        logger.info("Brand: {}", brand);
-        logger.info("Size: {}", size);
-        Page<ResponseProductDto> res = service.getProducts(pageable, brand, size);
-        return ResponseEntity.status(200).body(res);
-    }
+	@GetMapping
+	public ResponseEntity<Page<ResponseMinProductDto>> getProducts(Pageable pageable,
+			@RequestParam(defaultValue = "") String brand, @RequestParam(defaultValue = "") String size) {
+		logger.info("Brand: {}", brand);
+		logger.info("Size: {}", size);
+		final var res = service.getProducts(pageable, brand, size);
+		return ResponseEntity.status(200).body(res);
+	}
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ResponseProductDto> updateProduct(@PathVariable long id, @RequestBody RequestProductDto request) {
-        ResponseProductDto response = service.updateProduct(id, request);
-        logger.info("Produto atualizado: {}", response);
-        return ResponseEntity.status(200).body(response);
-    }
+	@PutMapping("/{id}")
+	public ResponseEntity<ResponseProductDto> updateProduct(@PathVariable long id,
+			@RequestBody RequestProductDto request) {
+		ResponseProductDto response = service.updateProduct(id, request);
+		logger.info("Produto atualizado: {}", response);
+		return ResponseEntity.status(200).body(response);
+	}
 
-    @PatchMapping
-    public ResponseEntity<ResponseProductDto> updateProductAmount(@RequestBody RequestChangeProductAmount request) {
-        ResponseProductDto response = service.changeProductAmount(request);
-        return ResponseEntity.status(200).body(response);
-    }
+	@PatchMapping
+	public ResponseEntity<ResponseProductDto> updateProductAmount(@RequestBody RequestChangeProductAmount request) {
+		ResponseProductDto response = service.changeProductAmount(request);
+		return ResponseEntity.status(200).body(response);
+	}
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> removeProductById(@PathVariable long id) {
-        service.removeProduct(id);
-        return ResponseEntity.status(400).build();
-    }
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> removeProductById(@PathVariable long id) {
+		service.removeProduct(id);
+		return ResponseEntity.status(400).build();
+	}
 
-    @GetMapping("report")
-    public ResponseEntity<DashboardDto> getSummary() {
-        final var res = service.getSummary();
-        return ResponseEntity.status(200).body(res);
-    }
+	@GetMapping("report")
+	public ResponseEntity<DashboardDto> getSummary() {
+		final var res = service.getSummary();
+		return ResponseEntity.status(200).body(res);
+	}
 }

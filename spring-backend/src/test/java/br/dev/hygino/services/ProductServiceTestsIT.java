@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.dev.hygino.dtos.RequestProductDto;
+import br.dev.hygino.dtos.ResponseMinProductDto;
 import br.dev.hygino.dtos.ResponseProductDto;
 import br.dev.hygino.enums.Color;
 import br.dev.hygino.factories.ProductFactory;
@@ -26,9 +27,6 @@ class ProductServiceTestsIT {
 
     @Autowired
     private ProductService productService;
-
-    //@Autowired
-   // private ProductRepository productRepository;
 
     private RequestProductDto requestProduct;
 
@@ -82,7 +80,7 @@ class ProductServiceTestsIT {
     public void getProductsShouldReturnPage() {
         final String size = "42";
         final PageRequest pageable = PageRequest.of(0, 10);
-        final Page<ResponseProductDto> res = productService.getProducts(pageable, "", size);
+        final Page<ResponseMinProductDto> res = productService.getProducts(pageable, "", size);
 
         assertEquals(6, res.getContent().size());
         assertEquals("Calça Jeans Slim Fit",res.getContent().getFirst().description());

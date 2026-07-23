@@ -13,6 +13,7 @@ import br.dev.hygino.dtos.ColorSummaryDto;
 import br.dev.hygino.dtos.DashboardDto;
 import br.dev.hygino.dtos.RequestChangeProductAmount;
 import br.dev.hygino.dtos.RequestProductDto;
+import br.dev.hygino.dtos.ResponseMinProductDto;
 import br.dev.hygino.dtos.ResponseProductDto;
 import br.dev.hygino.dtos.SizeSummaryDto;
 import br.dev.hygino.entities.Product;
@@ -56,10 +57,10 @@ public class ProductService {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<ResponseProductDto> getProducts(Pageable pageable, String brand, String size) {
+	public Page<ResponseMinProductDto> getProducts(Pageable pageable, String brand, String size) {
 		final Page<Product> page = repository.findProducts(pageable, brand.isEmpty() ? null : brand,
 				size.isEmpty() ? null : size);
-		return page.map(ResponseProductDto::new);
+		return page.map(ResponseMinProductDto::new);
 	}
 
 	@Transactional

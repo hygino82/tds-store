@@ -1,12 +1,10 @@
 package br.dev.hygino.dtos;
 
-import java.time.LocalDateTime;
-
 import br.dev.hygino.entities.Product;
 import br.dev.hygino.enums.Category;
 import br.dev.hygino.enums.Color;
 
-public record ResponseProductDto(
+public record ResponseMinProductDto(
         Long id,
         String description,
         String brand,
@@ -14,12 +12,9 @@ public record ResponseProductDto(
         Category category,
         String size,
         Double price,
-        Integer amount,
-        String imageUrl,
-        LocalDateTime createdAt,
-        LocalDateTime updatedAt) {
+        Integer amount) {
 
-    public ResponseProductDto(Product entity) {
+    public ResponseMinProductDto(Product entity) {
         this(
                 entity.getId(),
                 entity.getDescription(),
@@ -28,10 +23,7 @@ public record ResponseProductDto(
                 entity.getCategory(),
                 entity.getSize(),
                 entity.getPrice(),
-                entity.getAmount(),
-                entity.getImageUrl(),
-                entity.getCreatedAt(),
-                entity.getUpdatedAt()
+                entity.getAmount()
         );
     }
 }

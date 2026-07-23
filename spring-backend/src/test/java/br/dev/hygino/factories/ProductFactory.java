@@ -8,10 +8,10 @@ import br.dev.hygino.enums.Color;
 public class ProductFactory {
 
 	public static RequestProductDto createRequestProduct() {
-		return new RequestProductDto("Jaqueta Jeans", "Lee", Color.GREY, Category.BLOUSES, "7", 35.0, 9);
+		return new RequestProductDto("Jaqueta Jeans", "Lee", Color.GREY, Category.BLOUSES, "7", 35.0, 9, "jaqueta.png");
 	}
 
 	public static Product createProduct() {
-		return new Product(21L, "Jaqueta Jeans", "Lee", Color.GREY, Category.BLOUSES, "7", 35.0, 9);
+		return new Product(21L, "Jaqueta Jeans", "Lee", Color.GREY, Category.BLOUSES, "7", 35.0, 9, "jaqueta.png");
 	}
 }
